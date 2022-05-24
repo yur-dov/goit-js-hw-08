@@ -11,9 +11,9 @@ refs.form.addEventListener('submit', onFormSabmit);
 refs.form.addEventListener('input', throttle(onFormInput, 500));
 
 populateTextarea()
+let formData = {} 
 
 function onFormInput(event) {
-    let formData = {} 
     // formData[event.target.name] = event.target.value;
     formData.email = refs.input.value
     formData.message = refs.textarea.value
