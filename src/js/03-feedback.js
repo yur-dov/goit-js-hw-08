@@ -8,30 +8,35 @@ const refs = {
 };
 
 refs.form.addEventListener('submit', onFormSabmit);
-refs.form.addEventListener('input', throttle(onFormSubmit, 500));
+refs.form.addEventListener('input', throttle(onFormInput, 500));
 
-const formData = {} 
+populateTextarea()
 
-function onFormSubmit(event) {
-    formData[event.target.name] = event.target.value;
+function onFormInput(event) {
+    let formData = {} 
+    // formData[event.target.name] = event.target.value;
+    formData.email = refs.input.value
+    formData.message = refs.textarea.value
     localStorage.setItem(STORAGE_KEY, JSON.stringify(formData))
-    console.log(formData);
 }
 
-function onFormSabmit(event) {
+function  onFormSabmit(event) {
     event.preventDefault()
 
-    if(refs.input.value === '' || refs.textarea.value === ''){
-        return alert('all text fields must be filled')
-    }
-
+    if (refs.input.value === '' || refs.textarea.value === ''){
+        return alert('all text fields must be filled');
+    };
     console.log(formData);
-    event.currentTarget.reset()
-    localStorage.removeItem(STORAGE_KEY)
+    event.currentTarget.reset();
+    localStorage.removeItem(STORAGE_KEY);
 }
-populateTextarea()
+
 function populateTextarea() {
     const saveMessege = JSON.parse(localStorage.getItem(STORAGE_KEY))
-    refs.textarea.value = saveMessege.message
-    refs.input.value = saveMessege.email
+
+    if (saveMessege) {
+        refs.input.value = saveMessege.email;
+        refs.textarea.value = saveMessege.message;
+    }
+
 }
